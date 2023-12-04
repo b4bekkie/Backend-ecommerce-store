@@ -7,13 +7,14 @@ class Role extends Model {}
 
 Role.init ( {
 
-    orderItemId : {
+    roleId : {
         primaryKey : true,
 
         type : DataTypes.STRING(90)
+        
 
     },
-    orderItemName : {
+    roleName : {
         type : DataTypes.STRING(90),
         allowNull : false
     },

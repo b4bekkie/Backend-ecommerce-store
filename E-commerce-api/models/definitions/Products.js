@@ -7,16 +7,20 @@ class Product extends Model {}
 
 Product.init ( {
 
-    orderItemId : {
+    productId : {
         primaryKey : true,
 
         type : DataTypes.STRING(90)
 
     },
-    orderItemName : {
+    productName : {
         type : DataTypes.STRING(90),
         allowNull : false
     },
+    productDescription :  {
+        type : DataTypes.STRING(250),
+        allowNull : false
+    }
    
 
 

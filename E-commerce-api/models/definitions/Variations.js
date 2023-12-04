@@ -7,13 +7,13 @@ class Variation extends Model {}
 
 Variation.init ( {
 
-    orderItemId : {
+    variationId : {
         primaryKey : true,
 
         type : DataTypes.STRING(90)
 
     },
-    orderItemName : {
+    size : {
         type : DataTypes.STRING(90),
         allowNull : false
     },
