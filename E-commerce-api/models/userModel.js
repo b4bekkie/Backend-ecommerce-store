@@ -43,5 +43,20 @@ module.exports = {
             }
             
         }
+    } ,
+    getAllUsers :  async()=> {
+        try {
+
+            const users = await models.users.findAll()
+            return {
+                response : users
+            }
+            
+        } catch (error) {
+            return {
+                error : error.message
+            }
+            
+        }
     }
 }

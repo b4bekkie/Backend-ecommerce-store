@@ -41,5 +41,23 @@ module.exports = {
                 response : error.message
             }
         }
+    },
+
+    getAllUsers : () => {
+        try {
+
+            const users = userModel.getAllUsers();
+            if(users.error) {
+                return {
+                    response : "no users exists"
+                }
+            }
+            return {
+                response : users.response
+            }
+            
+        } catch (error) {
+            
+        }
     }
 }

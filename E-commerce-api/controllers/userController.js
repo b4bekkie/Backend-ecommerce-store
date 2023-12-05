@@ -1,3 +1,4 @@
+const userModel = require('../models/userModel');
 const userService = require('../services/userService');
 
 const joi = require('joi');
@@ -37,5 +38,23 @@ module.exports = {
             error : error.message
         }
     }
+    },
+
+    getAllUsers : async (req,res)=>{
+
+        try {
+
+            const allUsers = await userModel.getAllUsers();
+            if(allUsers.error) {
+                return ({response : allUsers.error})
+            }
+            return (res.send({response : allUsers.response}))
+            
+        } catch (error) {
+            return {
+                error : error.message
+            }
+        }
+
     }
 }
