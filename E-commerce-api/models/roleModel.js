@@ -6,7 +6,7 @@ module.exports = {
     createRole  : async (roleId,roleName)=> {
         try {
 
-            const createdRole = await models.Role.create({
+            const createdRole = await models.roles.create({
                 roleId,
                 roleName
 

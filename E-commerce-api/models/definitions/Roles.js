@@ -10,7 +10,7 @@ Role.init ( {
     roleId : {
         primaryKey : true,
 
-        type : DataTypes.STRING(90)
+        type : DataTypes.STRING(255)
         
 
     },

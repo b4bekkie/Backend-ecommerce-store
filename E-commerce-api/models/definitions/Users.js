@@ -10,19 +10,19 @@ Users.init ( {
     userId : {
         primaryKey : true,
 
-        type : DataTypes.STRING(90)
+        type : DataTypes.STRING(255)
 
     },
     name : {
-        type : DataTypes.STRING(90),
+        type : DataTypes.STRING(255),
         allowNull : false
     },
     email : {
-        type : DataTypes.STRING(90),
+        type : DataTypes.STRING(255),
         allowNull : false
     },
     password : {
-        type : DataTypes.STRING(90),
+        type : DataTypes.STRING(255),
         allowNull : false
     }
 

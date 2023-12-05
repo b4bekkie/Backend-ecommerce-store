@@ -1,16 +1,16 @@
 const sequelize = require('../bin/dbconnection');
 
-const Users = require('./definitions/Users')
+const users = require('./definitions/Users')
 
-const Cart= require('./definitions/Carts')
-const Product = require('./definitions/Products')
-const CartItem = require('./definitions/CartItem')
-const Variation = require('./definitions/Variations')
-const Role = require('./definitions/Roles')
-const Order = require('./definitions/Orders')
-const OrderItem = require("./definitions/OrderItem")
+const carts= require('./definitions/Carts')
+const products = require('./definitions/Products')
+const cartItems = require('./definitions/CartItem')
+const productVariations = require('./definitions/Variations')
+const roles = require('./definitions/Roles')
+const orders = require('./definitions/Orders')
+const orderItems = require("./definitions/OrderItem")
 
-const models = {Users,Product,CartItem,Cart,Variation,Role,Order,OrderItem};
+const models = {users,products,cartItems,carts,productVariations,roles,orders,orderItems};
 
 const db = {}; 
 
@@ -19,19 +19,42 @@ db.sequelize = sequelize;
 sequelize.models = models;
 
 
-///////////////////////relationship in tables
-///////////1:1 
-//user-cart
 
+users.hasMany(orders, { foreignKey: "userId" });
+orders.belongsTo(users, { foreignKey: "userId" });
 
-//////////1:N (one-many)
-//user-product
-Users.hasMany(Product,{foreignKey : "userId"})
-Product.belongsTo(Users , {foreignKey : "userId"})
-//user-role
-Role.hasMany(Users, { foreignKey: 'roleId' });
-Users.belongsTo(Role, { foreignKey: 'roleId' });
+//user-product 1:M
+users.hasMany(products, { foreignKey: "userId" });
+products.belongsTo(users, { foreignKey: "userId" });
 
+//product-productVariations 1:M
+products.hasMany(productVariations, { foreignKey: "productId" });
+productVariations.belongsTo(products, { foreignKey: "productId" });
+
+//productVariations-cartItems 1:M && cart-cartItems 1:M  (productVariation-cartItems-cart M:M)
+productVariations.hasMany(cartItems, { foreignKey: "variationId" });
+cartItems.belongsTo(productVariations, { foreignKey: "variationId" });
+//
+carts.hasMany(cartItems, { foreignKey: "cartId" });///relations
+
+//1:1 Relations
+//user-cart 1:1
+users.hasOne(carts, { foreignKey: "userId" });
+carts.belongsTo(users, { foreignKey: "userId" });
+
+//1:M Relations
+//user-role 1:M
+roles.hasMany(users, { foreignKey: "roleId" });
+users.belongsTo(roles, { foreignKey: "roleId" });
+
+cartItems.belongsTo(carts, { foreignKey: "cartId" });
+
+//productVariations-orderItems 1:M && orders-orderItems 1:M (productVariations-orderItems-orders M:M)
+productVariations.hasMany(orderItems, { foreignKey: "variationId" });
+orderItems.belongsTo(productVariations, { foreignKey: "variationId" });
+//
+orders.hasMany(orderItems, { foreignKey: "orderId" });
+orderItems.belongsTo(orders, { foreignKey: "orderId" });
  
 
 
