@@ -47,9 +47,9 @@ module.exports = {
     getAllUsers :  async()=> {
         try {
 
-            const users = await models.users.findAll()
+            const allusers = await models.users.findAll()
             return {
-                response : users
+                response : allusers
             }
             
         } catch (error) {
@@ -58,5 +58,24 @@ module.exports = {
             }
             
         }
+    } ,
+
+    deleteUser : async (query)=>  {
+
+        const user = await models.users.destroy({
+            where   : {
+                userId :  query.userId
+            }
+
+        })
+         return {
+            response : user
+         }
     }
+    
+
+
+
+
+    
 }

@@ -27,6 +27,31 @@ const { v4: uuidv4} = require('uuid')
         }
         
  
+     },
+
+     deleteRole :async  (query)=>{
+try {
+    
+    const deleteRole = await roleModel.deleteRole(query.roleId);
+    if(deleteRole.error) {
+        return {
+            response : deleteRole.error
+        }
+    }
+    return {
+        response : deleteRole.response
+    }
+} catch (error) {
+    return  {
+        error : error.message
+
+    }
+    
+}
+
+
+    
+
      }
   }
  

@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { query } = require('express');
 
 const { v4: uuidV4} = require('uuid');
 
@@ -29,7 +30,7 @@ module.exports = {
                    response  : createdUser.error
                 }
             }
-            delete createdUser.response.dataValues.password
+            // delete createdUser.response.dataValues.password
             return {
                 response : createdUser.response
             }
@@ -59,5 +60,33 @@ module.exports = {
         } catch (error) {
             
         }
-    }
+    },  
+
+   
+
+    deleteUser :async  (query)=>{
+        try {
+            
+            const deleteUser = await userModel.deleteUser(query.userId);
+            if(deleteUser.error) {
+                return {
+                    response : deleteUser.error
+                }
+            }
+            return {
+                response : deleteUser.response
+            }
+        } catch (error) {
+            return  {
+                error : error.message
+        
+            }
+            
+        }
+        
+        
+            
+        
+             }
+    
 }

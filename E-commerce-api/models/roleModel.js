@@ -21,5 +21,18 @@ module.exports = {
             }
             
         }
+    },
+
+    deleteRole : async (roleId)=>  {
+
+        const deleteRole = await models.roles.destroy({
+            where   : {
+                roleId :  roleId
+            }
+
+        })
+         return {
+            response : deleteRole
+         }
     }
 }

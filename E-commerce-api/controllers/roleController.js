@@ -27,5 +27,22 @@ module.exports = {
             }
             
         }
+    },
+
+    deleteRole : async (req,res)=> {
+
+        try { 
+            const deleteRole = await roleService.deleteRole(req.query);
+            if(deleteRole.error){
+            return res.send({response : deleteRole.error})
+            }
+            return res.send({response : deleteRole.response})
+
+        } catch (error) {
+            return {
+                error : error.message
+            }
+            
+        }
     }
 }

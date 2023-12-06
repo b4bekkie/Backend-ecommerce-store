@@ -17,6 +17,9 @@ const createUserSchema = joi.object().keys({
 
 
 })
+const getByIdSchema = joi.object().keys({
+    userId: joi.string().required(),
+  });
 
 
 module.exports = {
@@ -31,7 +34,7 @@ module.exports = {
            res.send(  {response : createdUser.error})
             
         }
-        res.send(  {response : createdUser.response})
+       return( res.send(  {response : createdUser.response}) )
             
     } catch (error) {
         return {
@@ -56,5 +59,22 @@ module.exports = {
             }
         }
 
-    }
+    },
+
+    deleteUser : async (req,res)=> {
+
+      try { 
+          const deleteUser = await userModel.deleteUser(req.query);
+          if(deleteUser.error){
+          return res.send({response : deleteUser.error})
+          }
+          return res.send({response : deleteUser.response})
+
+      } catch (error) {
+          return {
+              error : error.message
+          }
+          
+      }
+  }
 }
