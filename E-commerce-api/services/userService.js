@@ -17,12 +17,12 @@ module.exports = {
             const userEmailCheck = await userModel.getUserByEmail(body.email)
             if(userEmailCheck.response || userEmailCheck.error) {
                 return {
-                    error  : "invalid credtianls"
+                    error  : "User Exists already with this Email"
                 }
             }
             body.password = await bcrypt.hash(body.password,9)
 
-            const createdUser  =  await userModel.createUser(userId,body.roleId,body.name,body.email,body.password)
+            const createdUser  =  await userModel.createUser(userId,body.name,body.email,body.password)
             
           
             if(createdUser.error) {

@@ -15,7 +15,8 @@ Users.init ( {
     },
     name : {
         type : DataTypes.STRING(255),
-        allowNull : false
+        allowNull : false,
+        
     },
     email : {
         type : DataTypes.STRING(255),

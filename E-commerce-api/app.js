@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var roleRouter = require('./routes/rolerRouter');
 var userRouter = require('./routes/userRouter')
+const authRouter = require('./routes/authRouter');
 
 
 
@@ -33,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/role',roleRouter)
 app.use('/user',userRouter)
-
+app.use('/auth' ,authRouter)
 
 
 
