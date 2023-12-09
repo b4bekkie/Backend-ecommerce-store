@@ -7,8 +7,8 @@ module.exports = {
         try {
 
             const createdRole = await models.roles.create({
-                roleId,
-                roleName
+                roleId : roleId,
+                roleName : roleName
 
             })
             return {

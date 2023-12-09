@@ -1,19 +1,28 @@
 const authModel = require('../models/authModel');
 
 const {v4 : uuidV4} = require('uuid')
+const bcrypt = require ("bcrypt");
+const userModel = require('../models/userModel');
 module.exports = {
 
     signUp : async (body)=> {
 
         try {
-            const userId = uuidV4()
-        const createdUser = await authModel.signup(userId,body.name,body.email,body.password);
+            const userId =  uuidV4()
+            
+                
+           const password= await bcrypt.hash(body.password,10)
+           const createdUser = await authModel.signup(userId,body.name,body.email,password);
+            
+        
   if(createdUser.error) {
 
     return {
-        response  : error.message
+        response  : createdUser.error
     }
   }
+
+  
   return {
     response : createdUser.response
   }
@@ -29,22 +38,40 @@ module.exports = {
     },
     logIn :async (body) =>{
 
-        try {
-            const logInUser = await authModel.logIn(body.email,body.password);
-            if(logInUser.error) {
-                return {
-                    response : logInUser.error || "wrong credentials"
-                }
-            }
+      try {
+
+
+        const checkUserEmail = await userModel.getUserByEmail(body.email)
+        if(!checkUserEmail.response || checkUserEmail.error) {
             return {
-                response : logInUser.response
+                response : "invalid email"
             }
-        } catch (error) {
+        };
+
+
+
+        const loginUser =await bcrypt.compare(body.password,checkUserEmail.response.dataValues.password);
+        if(!loginUser) {
             return {
-                error : error.message
+                response : "wrong password"
             }
-            
+        };
+        return {
+            response : "login successfully"
         }
+        
+      } catch (error) {
+        return {
+            error : error.message
+        }
+        
+      }
+
+            
+
+
+           
+        
 
     }
 }

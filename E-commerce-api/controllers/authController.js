@@ -7,10 +7,10 @@ const createUserSchema = joi.object().keys({
    
    
    
-    roleId: joi.string().required() ,
+  
     name : joi.string().required(),
     email: joi.string().email().required(),
-    password: joi.string(),
+    password: joi.string().required(),
 })
 
 
@@ -21,7 +21,7 @@ module.exports = {
     signUp  :async (req,res) => {
 
         try {
-            const validate = createUserSchema.validateAsync(req.body)
+            const validate =await createUserSchema.validateAsync(req.body)
             const createUser = await authService.signUp(validate)
             if(createUser.error) {
                 return res.send({response : createUser.error})

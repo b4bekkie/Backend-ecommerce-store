@@ -4,18 +4,10 @@ const userService = require('../services/userService');
 const joi = require('joi');
 
 const createUserSchema = joi.object().keys({
-   
-   
-   
-   
     roleId: joi.string().required(),
     name : joi.string().required(),
     email: joi.string().email().required(),
     password: joi.string(),
-   
-   
-
-
 })
 const getByIdSchema = joi.object().keys({
     userId: joi.string().required(),
@@ -60,7 +52,6 @@ module.exports = {
         }
 
     },
-
     deleteUser : async (req,res)=> {
 
       try { 
