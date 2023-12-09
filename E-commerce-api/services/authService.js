@@ -1,8 +1,10 @@
 const authModel = require('../models/authModel');
+const jwt = require('jsonwebtoken')
 
 const {v4 : uuidV4} = require('uuid')
 const bcrypt = require ("bcrypt");
 const userModel = require('../models/userModel');
+const config = require('../config.json')
 module.exports = {
 
     signUp : async (body)=> {
@@ -36,42 +38,37 @@ module.exports = {
 
         
     },
-    logIn :async (body) =>{
-
-      try {
-
-
-        const checkUserEmail = await userModel.getUserByEmail(body.email)
-        if(!checkUserEmail.response || checkUserEmail.error) {
-            return {
-                response : "invalid email"
+    logIn : async(body)=> {
+        try {
+            const checkUserEmail = await userModel.getUserByEmail(body.email);
+        
+            if (!checkUserEmail || checkUserEmail.error || !checkUserEmail.response) {
+                return {
+                    response: "invalid email"
+                };
             }
-        };
-
-
-
-        const loginUser =await bcrypt.compare(body.password,checkUserEmail.response.dataValues.password);
-        if(!loginUser) {
-            return {
-                response : "wrong password"
+        
+            const loginUser = await bcrypt.compare(body.password, checkUserEmail.response.dataValues.password);
+        
+            if (!loginUser) {
+                return {
+                    response: "wrong password"
+                };
             }
-        };
-        return {
-            response : "login successfully"
+        
+            delete checkUserEmail.response.dataValues.password;
+            const token = jwt.sign(checkUserEmail.response.dataValues , config.JWT_SECRET);
+        
+            return {
+                response: token
+            };
+        
+        } catch (error) {
+            return {
+                error: error.message
+            };
         }
         
-      } catch (error) {
-        return {
-            error : error.message
-        }
-        
-      }
-
-            
-
-
-           
-        
-
     }
+   
 }

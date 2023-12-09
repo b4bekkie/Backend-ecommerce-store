@@ -1,5 +1,7 @@
 const authService = require('../services/authService');
 
+
+
 const joi = require('joi')
 
 const createUserSchema = joi.object().keys({
@@ -43,6 +45,11 @@ module.exports = {
            return res.send( {response : logInUser.error})     
             
         }
+
+        const cookie = {
+            token : logInUser.response
+        }
+        res.cookie('accees_token',cookie,{ secure: true, httpOnly: true })
         return res.send({response : logInUser.response})
     }
     
