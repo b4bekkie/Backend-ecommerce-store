@@ -34,5 +34,23 @@ module.exports = {
          return {
             response : deleteRole
          }
-    }
+    },
+
+    getAllroles :async ()=> {
+
+       try {
+        const getAllroles = await models.roles.findAll();
+
+        return {
+            response : getAllroles
+        }
+       } catch (error) {
+
+        return {
+            error  : error.message
+        }
+        
+       }
+    },
+   
 }

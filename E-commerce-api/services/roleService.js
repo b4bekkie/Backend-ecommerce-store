@@ -52,6 +52,30 @@ try {
 
     
 
-     }
+     },
+     getAllRoles :async()=> {
+        try {
+
+            const getAllroles = await roleModel.getAllroles();
+
+            if(getAllroles.error) {
+                return {
+                    response : getAllroles.error
+                }
+            }
+            return {
+                response : getAllroles.response
+            }
+            
+        } catch (error) {
+            return {
+                error : error.message
+            }
+            
+        }
+     },
+
+    
+     
   }
  

@@ -44,5 +44,21 @@ module.exports = {
             }
             
         }
-    }
+    },
+    getAllRoles :async (req,res) => {
+        try {
+            const getAllRoles = await roleService.getAllRoles()
+            if(getAllRoles.error) {
+                return res.send({response : getAllRoles.error})
+            }
+            return  res.send({response : getAllRoles.response}) 
+            
+        } catch (error) {
+            return {
+                error : error.message
+            }
+        }
+    },
+
+    
 }

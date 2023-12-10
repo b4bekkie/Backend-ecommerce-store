@@ -60,14 +60,29 @@ module.exports = {
             delete checkUserEmail.response.dataValues.password;
             const token = jwt.sign(checkUserEmail.response.dataValues , config.JWT_SECRET);
 
-            const sessionId = uuidV4();
+
+            const findsession = await sessionModel.findSessionByuserId(checkUserEmail.response.dataValues.userId)
+            if(findsession) {
+
+                await sessionModel.deleteSession(checkUserEmail.response.dataValues.userId)
+            }
+
+            console.log(findsession)
+            
+
+
+            const sessionId = uuidV4()
+
             const createSession = await sessionModel.createSession(
                 sessionId,
                 token,
                 checkUserEmail.response.dataValues.userId
                 
             );
-            console.log(createSession)
+          
+            
+        
+            
 
                 if(createSession.error || !createSession.response) {
                     return {

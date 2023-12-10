@@ -24,9 +24,11 @@ Session.init ( {
 
 },{
 sequelize,
+
 timestamps : true,
-paranoid : true,
-modelName : "Session"
+
+modelName : "Session",
+
 
 
 });
