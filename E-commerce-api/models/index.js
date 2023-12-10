@@ -9,8 +9,9 @@ const productVariations = require('./definitions/Variations')
 const roles = require('./definitions/Roles')
 const orders = require('./definitions/Orders')
 const orderItems = require("./definitions/OrderItem")
+const sessions = require("./definitions/session")
 
-const models = {users,products,cartItems,carts,productVariations,roles,orders,orderItems};
+const models = {users,products,cartItems,carts,productVariations,roles,orders,orderItems,sessions};
 
 const db = {}; 
 
@@ -38,9 +39,13 @@ cartItems.belongsTo(productVariations, { foreignKey: "variationId" });
 carts.hasMany(cartItems, { foreignKey: "cartId" });///relations
 
 //1:1 Relations
+
+
 //user-cart 1:1
 users.hasOne(carts, { foreignKey: "userId" });
 carts.belongsTo(users, { foreignKey: "userId" });
+users.hasOne(sessions,{foreignKey : "userId"});
+sessions.belongsTo(users,{foreignKey : "userId"})
 
 //1:M Relations
 //user-role 1:M

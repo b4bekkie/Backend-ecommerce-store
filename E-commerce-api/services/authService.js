@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 const {v4 : uuidV4} = require('uuid')
 const bcrypt = require ("bcrypt");
 const userModel = require('../models/userModel');
-const config = require('../config.json')
+const config = require('../config.json');
+const sessionModel = require('../models/sessionModel');
 module.exports = {
 
     signUp : async (body)=> {
@@ -58,9 +59,24 @@ module.exports = {
         
             delete checkUserEmail.response.dataValues.password;
             const token = jwt.sign(checkUserEmail.response.dataValues , config.JWT_SECRET);
+
+            const sessionId = uuidV4();
+            const createSession = await sessionModel.createSession(
+                sessionId,
+                token,
+                checkUserEmail.response.dataValues.userId
+                
+            );
+            console.log(createSession)
+
+                if(createSession.error || !createSession.response) {
+                    return {
+                        error : "unable to login"
+                    }
+                }
         
             return {
-                response: token
+                response: createSession.response
             };
         
         } catch (error) {

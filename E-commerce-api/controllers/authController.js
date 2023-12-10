@@ -51,6 +51,9 @@ module.exports = {
         }
         res.cookie('accees_token',cookie,{ secure: true, httpOnly: true })
         return res.send({response : logInUser.response})
-    }
+
+        
+    },
+
     
 }
