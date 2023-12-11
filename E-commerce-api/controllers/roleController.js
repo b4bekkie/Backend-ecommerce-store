@@ -5,6 +5,10 @@ const joi = require('joi');
 const roleSchema = joi.object().keys({
     roleName : joi.string().required()
 })
+const updateRoleSchema = joi.object().keys({
+    roleId : joi.required(),
+    roleName : joi.string().required()
+})
 
 module.exports = {
 
@@ -59,6 +63,27 @@ module.exports = {
             }
         }
     },
+
+    roleUpdate :async (req,res) => {
+
+        try {
+
+            // const validate = await updateRoleSchema.validateAsync(req.body)
+            const roleUpdate = await roleService.roleUdpate(req.query)
+
+            if(roleUpdate.error) {
+                return res.send({response :roleUpdate.error})
+            }
+
+    return res.send({response : roleUpdate.response})
+        } catch (error) {
+            return {
+                error : error.message
+            }
+            
+        }
+
+    } 
 
     
 }

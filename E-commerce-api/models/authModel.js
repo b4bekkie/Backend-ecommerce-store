@@ -3,9 +3,10 @@ const {models} = require('./index')
 
 module.exports = {
 
-    signup :  async(userId,name,email,password)=> {
+    signup :  async(roleId,userId,name,email,password)=> {
             try {
                    const createdUser = await models.users.create({
+                       roleId,
                        userId,
                        name,
                        email,

@@ -71,11 +71,63 @@ module.exports = {
          return {
             response : user
          }
+    },
+
+    getRoleByUserId : async(userId) =>{
+
+
+
+      try {
+            const getRoleOfUser  = await models.users.findOne( {
+                where: {
+                    userId: userId,
+                  },
+                  attributes: {
+                    exclude: ["createdAt", "updatedAt", "password", "deletedAt",],
+                  },
+                  include: {
+                    model: models.roles,
+                    attributes: {
+                      exclude: ['roleId',"createdAt", "updatedAt", "deletedAt"],
+                    },
+                  },
+        });
+        return {
+            response : getRoleOfUser
+        }
+      } catch (error) {
+        return {
+            error : error.message
+        }
+        
+      }
+    }   ,
+
+    updateUser  :async (userId,name,email,password)=> 
+    {
+       try {
+                        const updateUser = await models.users.update({
+                            name,
+                            email,
+                            password
+
+
+                        },{
+                            where : {
+                                userId  : userId
+                                
+                            }
+                        })
+                       
+
+                        return {
+                            response : updateUser
+                        }
+       } catch (error) {
+        return {
+            error : error.message
+        }
+        
+       }
     }
-    
-
-
-
-
-    
 }

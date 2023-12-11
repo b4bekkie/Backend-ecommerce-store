@@ -83,10 +83,51 @@ module.exports = {
             }
             
         }
-        
-        
+          },
+
+          getRoleByUserId : async(body)=> {
+
+                  try {
+                    
+            const getRoleOfUser =  await userModel.getRoleByUserId(body.userId)
+
+            if(getRoleOfUser.error) {
+                return {
+                    response : getRoleOfUser.error
+                }
+            }
+            return {
+                response : getRoleOfUser.response
+            }
+    
+} catch (error) {
+    return {
+        error : error.message
+    }
+    
+}
+
+          },
+
+          updateUser  :async (body)=> {
+         try {
+            const updateUser = await userModel.updateUser(body.userId,body.name,body.email,body.password)
+
+
+            if(updateUser.error) {
+                 return {
+                      response : updateUser.error
+                }
+            }
+            return {
+                response : updateUser.response
+            }
+         } catch (error) {
+            return {
+                error : error.message
+            }
             
-        
-             }
+         }
+          }
     
 }

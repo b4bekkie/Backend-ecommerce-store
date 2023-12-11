@@ -11,11 +11,20 @@ module.exports = {
     signUp : async (body)=> {
 
         try {
+           
+           
+            const userEmailCheck = await userModel.getUserByEmail(body.email)
+            if(userEmailCheck.response || userEmailCheck.error) {
+                return {
+                    error  : "User already Exists  with this Email"
+                }
+            }
+           
             const userId =  uuidV4()
             
                 
            const password= await bcrypt.hash(body.password,10)
-           const createdUser = await authModel.signup(userId,body.name,body.email,password);
+           const createdUser = await authModel.signup(body.roleId,userId,body.name,body.email,password);
             
         
   if(createdUser.error) {

@@ -3,11 +3,11 @@ const {models} = require('./index')
 
 module.exports = {
 
-    createRole  : async (roleId,roleName)=> {
+    createRole  : async (roleName)=> {
         try {
 
             const createdRole = await models.roles.create({
-                roleId : roleId,
+                
                 roleName : roleName
 
             })
@@ -25,17 +25,16 @@ module.exports = {
 
     deleteRole : async (roleId)=>  {
 
-        const deleteRole = await models.roles.destroy({
-            where   : {
-                roleId :  roleId
-            }
+        const deleteRole = await models.roles.destroy({ where : {
+            roleId: roleId
+        }
+           
 
         })
          return {
             response : deleteRole
          }
     },
-
     getAllroles :async ()=> {
 
        try {
@@ -52,5 +51,30 @@ module.exports = {
         
        }
     },
+    roleUpdate : async(roleId,roleName)=> {
+     
+
+        try {
+            const roleUpdate = await models.roles.update({  
+                roleName : roleName,
+                
+                
+            }, {
+                where : {
+                    roleId :roleId,
+                 
+                }
+            })
+            
+            return {
+                response : roleUpdate
+            }
+        } catch (error) {
+            return {
+                error : error.message
+            }
+        }
+
+    }
    
 }

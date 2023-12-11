@@ -75,6 +75,28 @@ try {
         }
      },
 
+     roleUdpate : async(body)=> {
+
+       try {
+        const roleUpdate = await roleModel.roleUpdate(body.roleId , body.roleName) 
+        
+        if(roleUpdate.error) {
+            return {
+                response : roleUpdate.error
+            }
+            
+        }
+        return {
+            response : roleUpdate.response
+        }
+       } catch (error) {
+        return {
+            error   : error.message
+        }
+       }
+
+     }
+
     
      
   }

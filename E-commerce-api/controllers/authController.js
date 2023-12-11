@@ -1,19 +1,20 @@
+const userModel = require('../models/userModel');
 const authService = require('../services/authService');
 
 
 
 const joi = require('joi')
 
-const createUserSchema = joi.object().keys({
+// const createUserSchema = joi.object().keys({
    
    
    
    
   
-    name : joi.string().required(),
-    email: joi.string().email().required(),
-    password: joi.string().required(),
-})
+//     name : joi.string().required(),
+//     email: joi.string().email().required(),
+//     password: joi.string().required(),
+// })
 
 
 
@@ -23,8 +24,10 @@ module.exports = {
     signUp  :async (req,res) => {
 
         try {
-            const validate =await createUserSchema.validateAsync(req.body)
-            const createUser = await authService.signUp(validate)
+            // const validate =await createUserSchema.validateAsync(req.body)
+
+           
+            const createUser = await authService.signUp(req.body)
             if(createUser.error) {
                 return res.send({response : createUser.error})
             }
@@ -49,11 +52,13 @@ module.exports = {
         const cookie = {
             token : logInUser.response
         }
-        res.cookie('accees_token',cookie,{ secure: true, httpOnly: true })
+        res.cookie('token',cookie,{ secure: true, httpOnly: true })
         return res.send({response : logInUser.response})
+
+       
 
         
     },
-
+   
     
 }

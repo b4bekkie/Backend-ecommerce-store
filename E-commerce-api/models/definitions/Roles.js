@@ -11,12 +11,12 @@ Role.init ( {
         primaryKey : true,
 
         type : DataTypes.STRING(255),
-         defaultValue : "effe8f51-228b-4c04-926a-3f8bf61662c8"
+        
         },
     roleName : {
         type : DataTypes.STRING(90),
         allowNull : false,
-        defaultValue : "Customer"
+       
     },
    
 
@@ -25,8 +25,7 @@ Role.init ( {
 
 },{
 sequelize,
-timestamps : true,
-paranoid : true,
+
 modelName : "Role"
 
 

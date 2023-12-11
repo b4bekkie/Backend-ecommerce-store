@@ -67,5 +67,38 @@ module.exports = {
           }
           
       }
+  },
+
+  getRoleByUserId : async (req,res)=>{
+
+      try {
+
+          const roleOfUser = await userService.getRoleByUserId(req.body);
+          if(roleOfUser.error) {
+              return ({response : roleOfUser.error})
+          }
+          return (res.send({response : roleOfUser.response}))
+          
+      } catch (error) {
+          return {
+              error : error.message
+          }
+      }
+
+  },
+
+  updateUser :async (req,res)=> {
+    try {
+        const updateUser = await userService.updateUser(req.body) 
+
+        if (updateUser.error)  {
+            return res.send({response : updateUser.error})
+        }
+        return res.send( {response : updateUser.response})
+    } catch (error) {
+        return {
+            error : error.message
+        }
+    }
   }
 }
