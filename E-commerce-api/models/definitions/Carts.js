@@ -7,7 +7,7 @@ class Cart extends Model {}
 
 Cart.init ( {
 
-    cardId : {
+    cartId : {
         primaryKey : true,
 
         type : DataTypes.STRING(90)

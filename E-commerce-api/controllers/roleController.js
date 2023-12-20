@@ -69,7 +69,7 @@ module.exports = {
         try {
 
             // const validate = await updateRoleSchema.validateAsync(req.body)
-            const roleUpdate = await roleService.roleUdpate(req.query)
+            const roleUpdate = await roleService.roleUdpate(req.body)
 
             if(roleUpdate.error) {
                 return res.send({response :roleUpdate.error})

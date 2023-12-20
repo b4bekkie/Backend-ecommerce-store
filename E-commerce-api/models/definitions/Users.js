@@ -1,5 +1,9 @@
 const sequelize = require('../../bin/dbconnection');
 
+const cart = require('../definitions/Carts')
+
+const {v4 : uuidV4} = require('uuid')
+
 
 const {Model , DataTypes} = require('sequelize')
 
@@ -30,11 +34,24 @@ Users.init ( {
 
 
 
-},{
+
+}, 
+   
+{
 sequelize,
 timestamps : true,
 paranoid : true,
-modelName : "Users"
+modelName : "Users",
+hooks : {
+    afterCreate : async(Users) => {
+      await cart.create({
+        userId : Users.dataValues.userId,
+        cartId : uuidV4(),
+        cartName : Users.dataValues.name  +"Cart"
+      })
+    }
+}
+
 
 
 });

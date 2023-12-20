@@ -42,8 +42,8 @@ carts.hasMany(cartItems, { foreignKey: "cartId" });///relations
 
 
 //user-cart 1:1
-users.hasOne(carts, { foreignKey: "userId" });
-carts.belongsTo(users, { foreignKey: "userId" });
+users.hasOne(carts, { foreignKey: "userId" ,onDelete : "CASCADE" });
+carts.belongsTo(users, { foreignKey: "userId" ,onDelete : "CASCADE" });
 users.hasOne(sessions,{foreignKey : "userId"});
 sessions.belongsTo(users,{foreignKey : "userId"})
 
