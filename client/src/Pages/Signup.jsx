@@ -1,6 +1,35 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
+
+  const [name,setName] = useState('');
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+const navigate = useNavigate()
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+
+    try {
+       const data = await axios.post('http://localhost:3000/auth/signup',{
+
+        roleId : "a6ca5409-ef59-4bd1-a921-a1ca0ddb9967",
+        name,
+        email,
+        password,
+       
+       })
+       if(data){
+        navigate('/login')
+       }
+    } catch (error) {
+      console.error(error)
+      
+    }
+  }
   return (
     <div>
        <>
@@ -14,8 +43,8 @@ function Signup() {
   <body class="h-full">
   ```
 */}
-<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-  <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 shadow-lg ">
+  <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
     <img
       className="mx-auto h-30 w-20"
       src="https://t3.ftcdn.net/jpg/02/41/39/06/360_F_241390620_hihddCG15N7I8HyPWUiv1eUH85D2SN9z.jpg"
@@ -27,13 +56,13 @@ function Signup() {
   </div>
 
   <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-    <form className="space-y-6" >
+    <form className="space-y-6  "  onSubmit={handleSubmit}  >
     <div>
         <label className="block text-sm font-medium leading-6 text-gray-900">
           Name
         </label>
         <div className="mt-2">
-          <input 
+          <input  onChange={(e) => setName(e.target.value)}
             id="name"
             name="name"
             type='text'
@@ -49,7 +78,7 @@ function Signup() {
           Email address
         </label>
         <div className="mt-2">
-          <input 
+          <input   onChange={(e) => setEmail(e.target.value)}
             id="email"
             name="email"
             type="email"
@@ -65,14 +94,14 @@ function Signup() {
           <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
             Password
           </label>
-          <div className="text-sm">
+          {/* <div className="text-sm">
             <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
               Forgot password?
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="mt-2">
-          <input 
+          <input   onChange={(e) => setPassword(e.target.value)}
             id="password"
             name="password"
             type="password"
@@ -95,9 +124,9 @@ function Signup() {
 
     <p className="mt-10 text-center text-sm text-gray-500">
        Have an account?{' '}
-      <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+      <Link to={'/login'} className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
        Sign in
-      </a>
+      </Link>
     </p>
   </div>
 </div>

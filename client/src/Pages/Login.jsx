@@ -1,8 +1,38 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Link,  useNavigate } from 'react-router-dom'
+
+
 
 function Login() {
+ 
 
+  const [email,setEmail] = useState('')
+  const [password,setPassword] = useState('')
+
+  const [login,setLogin] = useState(false)
+  const navigate = useNavigate()
+  
+  const handleSubmit = async(e)=> {
+
+    e.preventDefault();
+   try { 
+    
+    const data = await axios.post('http://localhost:3000/auth/login',{
+    email,
+    password
+  })
+  if(data) {
+    navigate('/')
+  }
+  
+  console.log(data)
+   } catch (error) {
+    console.log(error)
+    
+   }
+
+  }
   
   
   return ( 
@@ -30,13 +60,13 @@ function Login() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" >
+        <form className="space-y-6" onSubmit={handleSubmit} >
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
             </label>
             <div className="mt-2">
-              <input 
+              <input  onChange={(e)=>setEmail(e.target.value)}
                 id="email"
                 name="email"
                 type="email"
@@ -59,7 +89,7 @@ function Login() {
               </div>
             </div>
             <div className="mt-2">
-              <input 
+              <input  onChange={(e)=>setPassword(e.target.value)}
                 id="password"
                 name="password"
                 type="password"
@@ -82,9 +112,9 @@ function Login() {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a Have an account?{' '}
-          <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          <Link to={'/signup'}  className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
            Sign Ups
-          </a>
+          </Link>
         </p>
       </div>
     </div>

@@ -3,12 +3,12 @@ const {models} = require('./index')
 
 module.exports = {
 
-    createRole  : async (roleName)=> {
+    createRole  : async (roleId,roleName)=> {
         try {
 
             const createdRole = await models.roles.create({
-                
-                roleName : roleName
+                roleId,
+                roleName,
 
             })
             return {

@@ -7,6 +7,8 @@ var roleRouter = require('./routes/rolerRouter');
 var userRouter = require('./routes/userRouter')
 const authRouter = require('./routes/authRouter');
 
+const cors = require('cors')
+
 
 
 
@@ -14,6 +16,8 @@ const authRouter = require('./routes/authRouter');
 
 
 var app = express();
+
+app.use(cors())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
